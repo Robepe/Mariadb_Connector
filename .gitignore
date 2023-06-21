@@ -1,0 +1,16 @@
+*.txt
+*.jpg
+*.jpeg
+*.gif
+*.pyc
+*.bin
+*.dat
+*.pdf
+*.zip
+*.json
+*.class
+*.md
+*.db
+*.ods
+.vscode/
+.idea/
