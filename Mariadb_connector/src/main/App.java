@@ -213,7 +213,7 @@ public class App {
 			app.insertData(conn);
 
 			app.executeQuerys(conn, querySQL);
-			//app.modifyDB(conn, updateSQL);
+			app.modifyDB(conn, updateSQL);
 
 			conn.close();
 

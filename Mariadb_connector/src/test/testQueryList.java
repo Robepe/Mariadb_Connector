@@ -1,15 +1,15 @@
 package test;
 
-import java.io.File;
-import java.io.FileReader;
-
+import main.App;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.json.JSONObject;
 import java.sql.*;
 //import org.junit.Test;                    IMPORT JUNIT 4
 import org.junit.jupiter.api.Test;      //  IMPORT JUNIT 5
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import main.App;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class testQueryList {
@@ -20,8 +20,8 @@ public class testQueryList {
     public static void backup_DB() {
         try {
             Connection conn = app.connectDB();
-            app.createDB(conn, "MariaDB_Ejer1_test");
-			cloneDB();
+            //app.createDB(conn, "MariaDB_Ejer1_test");
+			cloneDB(conn);
 
         }catch (SQLException e) {
             e.printStackTrace();
@@ -40,11 +40,25 @@ public class testQueryList {
         }
     }
     */
-	private static void cloneDB() {
+	private static void cloneDB(Connection conn) {
 		try {
-            String path = new File("src/main/resources/config.json").getAbsolutePath();
+            Path path = Paths.get("src/resources/config.json");
             System.out.println(path);
-			FileReader fr = new FileReader(path);
+
+            boolean pathExists = Files.exists(path);
+			boolean pathIsFile = Files.isRegularFile(path);
+			boolean pathIsDir = Files.isDirectory(path);
+			boolean pathReadable = Files.isReadable(path);
+			boolean pathWritable = Files.isWritable(path);
+			boolean pathExecutable = Files.isExecutable(path);
+			boolean pathHidden = Files.isHidden(path);
+
+			Path absolutePath = path.toAbsolutePath();
+			System.out.println(absolutePath);
+			Path canonicalPath = path.toRealPath().normalize();
+			System.out.println(canonicalPath);
+
+			/*FileReader fr = new FileReader(path); //FileNotFoundException
 			
 			JSONObject config = new JSONObject(fr);
 			String socket = config.getString("socket");
@@ -55,7 +69,7 @@ public class testQueryList {
 			Process p = pb.start();
 
 			int exitCode = p.waitFor();
-			System.out.println("Process finished with Exit Code: " + exitCode);
+			System.out.println("Process finished with Exit Code: " + exitCode);*/
 
 		} catch (Exception e) {
 			e.printStackTrace();
