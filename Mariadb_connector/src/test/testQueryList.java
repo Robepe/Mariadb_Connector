@@ -2,7 +2,6 @@ package test;
 
 import main.App;
 import java.io.FileReader;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.json.simple.JSONObject;
@@ -51,10 +50,9 @@ public class testQueryList {
 			JSONObject data = (JSONObject) obj;
 			String socket = (String) data.get("socket");
 			String user = (String) data.get("user");
-			String password = (String) data.get("password");
 
-			ProcessBuilder pb = new ProcessBuilder("mysqldump", "--socket=" + socket, " --skip-column-statistics",
-					" -u " + user, " -p " + password + " MariaDB_Ejer1", " > tmp_db/prueba2.sql");
+			ProcessBuilder pb = new ProcessBuilder("mysqldump", "--socket=" + socket, "--skip-column-statistics",
+					"-u" + user, "MariaDB_Ejer1", "--result-file=src/test/tmp_db/MariaDB_Ejer1_test.sql");
 			Process p = pb.start();
 
 			int exitCode = p.waitFor();
