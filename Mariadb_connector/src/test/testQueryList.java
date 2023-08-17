@@ -1,12 +1,12 @@
 package test;
 
 import main.App;
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.*;
 import java.sql.*;
 //import org.junit.Test;                    IMPORT JUNIT 4
 import org.junit.jupiter.api.Test; 		//  IMPORT JUNIT 5
@@ -46,27 +46,12 @@ public class testQueryList {
 	private static void cloneDB(Connection conn) {
 		try {
 			Path path = Paths.get("src/resources/config.json");
-			System.out.println(path);
 
-			boolean pathExists = Files.exists(path);
-			boolean pathIsFile = Files.isRegularFile(path);
-			boolean pathIsDir = Files.isDirectory(path);
-			boolean pathReadable = Files.isReadable(path);
-			boolean pathWritable = Files.isWritable(path);
-			boolean pathExecutable = Files.isExecutable(path);
-			boolean pathHidden = Files.isHidden(path);
-
-			Path absolutePath = path.toAbsolutePath();
-			System.out.println(absolutePath);
-			Path canonicalPath = path.toRealPath().normalize();
-			System.out.println(canonicalPath);
-
-			BufferedReader br = new BufferedReader(new FileReader(path.toFile()));
-
-			JSONObject config = new JSONObject(br);
-			String socket = config.getString("socket");
-			String user = config.getString("user");
-			String password = config.getString("password");
+			Object obj = new JSONParser().parse(new FileReader(path.toFile()));
+			JSONObject data = (JSONObject) obj;
+			String socket = (String) data.get("socket");
+			String user = (String) data.get("user");
+			String password = (String) data.get("password");
 
 			ProcessBuilder pb = new ProcessBuilder("mysqldump", "--socket=" + socket, " --skip-column-statistics",
 					" -u " + user, " -p " + password + " MariaDB_Ejer1", " > tmp_db/prueba2.sql");
