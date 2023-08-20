@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import java.sql.*;
 //import org.junit.Test;                    IMPORT JUNIT 4
-import org.junit.jupiter.api.Test; 		//  IMPORT JUNIT 5
+import org.junit.jupiter.api.Test; //  IMPORT JUNIT 5
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,19 +30,17 @@ public class testQueryList {
 		}
 	}
 
-	/*
-	 * @AfterAll
-	 * public static void drop_DB() {
-	 * try {
-	 * Connection conn = app.connectDB(); // redundante posiblemente
-	 * Statement cursor = conn.createStatement();
-	 * cursor.execute("DROP DATABASE IF EXISTS MariaDB_Ejer1_test");
-	 * 
-	 * }catch (SQLException e) {
-	 * e.printStackTrace();
-	 * }
-	 * }
-	 */
+	@AfterAll
+	public static void drop_DB() {
+		try {
+			Connection conn = app.connectDB();
+			Statement cursor = conn.createStatement();
+			cursor.execute("DROP DATABASE IF EXISTS MariaDB_Ejer1_test");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Method dedicated to clone the main database in order to execute the test on a
